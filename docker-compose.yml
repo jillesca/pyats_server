@@ -1,0 +1,9 @@
+services:
+  pyats_server:
+    container_name: pyats_server
+    build:
+      context: .
+      args:
+        - PYATS_SERVER_PORT
+    ports:
+      - "${PYATS_SERVER_PORT:-57000}:${PYATS_SERVER_PORT:-57000}"

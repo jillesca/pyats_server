@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "detailed": {
+      "format": "%(asctime)s.%(msecs)03d: %(name)s-%(levelname)s: %(message)s",
+      "datefmt": "%Y-%m-%d %H:%M:%S"
+    },
+    "colored": {
+      "()": "colorlog.ColoredFormatter",
+      "format": "%(green)s%(asctime)s.%(msecs)03d:%(reset)s %(bold)s%(log_color)s[%(levelname)s]%(reset)s %(blue)s[%(name)s]:%(lineno)d%(reset)s %(message)s",
+      "datefmt": "%Y-%m-%d %H:%M:%S",
+      "log_colors": {
+        "DEBUG": "cyan",
+        "INFO": "black",
+        "WARNING": "yellow",
+        "ERROR": "red",
+        "CRITICAL": "red"
+      }
+    }
+  },
+  "handlers": {
+    "stdout": {
+      "class": "colorlog.StreamHandler",
+      "level": "DEBUG",
+      "formatter": "colored"
+    },
+    "stderr": {
+      "class": "colorlog.StreamHandler",
+      "level": "DEBUG",
+      "formatter": "colored"
+    },
+    "file": {
+      "class": "logging.handlers.RotatingFileHandler",
+      "level": "DEBUG",
+      "formatter": "detailed",
+      "filename": "logs/pyats_connector.log",
+      "maxBytes": 10000000,
+      "backupCount": 3
+    }
+  },
+  "loggers": {
+    "pyats_connector": {
+      "level": "DEBUG",
+      "handlers": [
+        "stdout",
+        "stderr",
+        "file"
+      ],
+      "propagate": true
+    }
+  }
+}
