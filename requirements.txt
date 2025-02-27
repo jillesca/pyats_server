@@ -1,0 +1,4 @@
+pyats[full]
+uvicorn
+fastapi
+colorlog

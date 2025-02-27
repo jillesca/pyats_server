@@ -1,0 +1,1000 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/health/memory": {
+      "get": {
+        "summary": "Retrieves the memory health information for a given device.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n\nIf no memory health issues are detected, the function returns 'No memory health issues detected on the device'.\n\nReturns:\n  - dict: A dictionary containing the memory health information.",
+        "operationId": "getHealthMemory",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Gethealthmemory"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/cpu": {
+      "get": {
+        "summary": "Retrieves the CPU health information for a given device.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n\nIf no CPU health issues are detected, the function returns 'No CPU health issues detected on the device'.\n\nReturns:\n  - dict: A dictionary containing the CPU health information.",
+        "operationId": "getHealthCpu",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Gethealthcpu"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/logging": {
+      "get": {
+        "summary": "Retrieves health logging information from a device.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n  - keywords (list[str], optional): List of keywords to filter the health logging information.\n    Defaults to traceback, error, down and adjchange.\n\nIf no issues are detected, the function returns 'No issues detected on the logs of the device'.\n\nReturns:\n  dict: The health logging information in JSON format.",
+        "operationId": "getHealthLogging",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Keywords"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Gethealthlogging"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interface/running-config": {
+      "get": {
+        "summary": "Get the running config of a single interface on a device.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n  - interface_name (str): The name of the interface.\n\nReturns:\n  - dict: The running configuration of the specified interface.",
+        "operationId": "getInterfaceRunningConfig",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          },
+          {
+            "name": "interface_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interface Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Getinterfacerunningconfig"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interfaces/status-and-description": {
+      "get": {
+        "summary": "Get the status and description of the interfaces per device.",
+        "description": "Args:\n  device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n\nReturns:\n  - dict: A dictionary containing the status, protocol, and description of the interfaces.",
+        "operationId": "getInterfacesStatusAndDescription",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Getinterfacesstatusanddescription"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interfaces/status": {
+      "get": {
+        "summary": "Get the status of all interfaces on a device.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n\nReturns:\n  - dict: A dictionary containing the status of the interfaces on the device.",
+        "operationId": "getInterfacesStatus",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Getinterfacesstatus"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interface/detailed-status": {
+      "get": {
+        "summary": "Get detailed status information for a single interface.",
+        "description": "Including admin state, line protocol, operational status, bandwidth, duplex, speed and other interface-specific details.\n\nif not interface is found, the function returns \"ERROR_INTERFACE_NOT_FOUND\"\n\nArgs:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n  - interface_name (str): The name of the interface.\n\nReturns:\n  - dict: A dictionary containing detailed status information for the interface.",
+        "operationId": "getInterfaceDetailedStatus",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          },
+          {
+            "name": "interface_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interface Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Getinterfacedetailedstatus"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interface/information": {
+      "get": {
+        "summary": "Get interface information from device for a list of interfaces. Interfaces must be in a single list.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n  - interfaces_name (list[str]): A list of interface names. This should be a single list of interface names, not multiple query parameters.\n\nReturns:\n  - list[dict]: A list of dictionaries containing interface information\n\nExample:\n  Correct usage:\n  GET /interface/information?device_name=cat8000v-2&interfaces_name=GigabitEthernet3&interfaces_name=GigabitEthernet2",
+        "operationId": "getInterfaceInformation",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          },
+          {
+            "name": "interfaces_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Interfaces Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Getinterfaceinformation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interface/admin-status": {
+      "get": {
+        "summary": "Get the administrative status of a single interface on a device.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n  - interface_name (str): The name of the interface.\n\nReturns:\n  - str: The administrative status of the interface.",
+        "operationId": "getInterfaceAdminStatus",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          },
+          {
+            "name": "interface_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interface Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Getinterfaceadminstatus"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interface/verify-state-up": {
+      "get": {
+        "summary": "Verify interface state is up and line protocol is up",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n  - interface_name (str): The name of the interface\n\nReturns:\n  - bool: True if the interface state is up and line protocol is up, False otherwise",
+        "operationId": "verifyInterfaceStateUp",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          },
+          {
+            "name": "interface_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interface Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Verifyinterfacestateup"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interface/events": {
+      "get": {
+        "summary": "Retrieves the events for single interface on a device. Multiple interfaces are not supported. Split the request for multiple interfaces into multiple requests.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n  - interface_name (str): The name of the interface.\n\nReturns:\n  - dict: A dictionary containing the events for the specified interface.",
+        "operationId": "getInterfaceEvents",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          },
+          {
+            "name": "interface_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interface Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Getinterfaceevents"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/list": {
+      "get": {
+        "summary": "Retrieves a list of existing devices.",
+        "description": "Args:\n  - None. The function will always return a list of device names. It doesn't require any arguments.\n\nReturns:\n  - list: A list of device names.",
+        "operationId": "getDevicesList",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {},
+                  "type": "array",
+                  "title": "Response Getdeviceslist"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/isis/neighbors": {
+      "get": {
+        "summary": "Retrieves the ISIS neighbors for a given device. Neighbors down are not included.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n\nReturns:\n  - dict: A dictionary containing the ISIS neighbors information.",
+        "operationId": "getIsisNeighbors",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Getisisneighbors"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/isis/interface-events": {
+      "get": {
+        "summary": "Retrieves ISIS interface events for a given device.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n\nReturns:\n  dict: A dictionary containing the ISIS interface events.",
+        "operationId": "getIsisInterfaceEvents",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Getisisinterfaceevents"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/isis/interface-information": {
+      "get": {
+        "summary": "Retrieves a list of ISIS interfaces for a given device and VRF.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n  - vrf_name (str, optional): The name of the VRF. Defaults to \"default\".\n\nReturns:\n  list: A list of ISIS interfaces.",
+        "operationId": "getIsisInterfaceInformation",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          },
+          {
+            "name": "vrf_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "default",
+              "title": "Vrf Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {},
+                  "title": "Response Getisisinterfaceinformation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vrf/present": {
+      "get": {
+        "summary": "Get all vrfs from device",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n\nReturns:\n  - list: List of vrfs present on the device. If no vrfs are found, returns [\"NO_VRFs_FOUND\"].",
+        "operationId": "getVrfPresent",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {},
+                  "title": "Response Getvrfpresent"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interface/interfaces-under-vrf": {
+      "get": {
+        "summary": "Get interfaces configured under specific Vrf",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n  - vrf_name (str, optional): Name of the VRF. Defaults to None.\n\nReturns:\n  list: List of interfaces configured under the specified VRF",
+        "operationId": "getInterfacesUnderVrf",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          },
+          {
+            "name": "vrf_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "default",
+              "title": "Vrf Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {},
+                  "title": "Response Getinterfacesundervrf"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/routing/routes": {
+      "get": {
+        "summary": "Execute 'show ip route vrf <vrf>' and retrieve the routes.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n  - vrf_name (str, optional): The name of the VRF. Defaults to None.\n  - address_family (str, optional): The address family name. Defaults to \"ipv4\".\n\nTODO: Need to reduce the amount of inrormation returned\n\nReturns:\n  - dict: A dictionary containing the received routes.",
+        "operationId": "getRoutingRoutes",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          },
+          {
+            "name": "vrf_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Vrf Name"
+            }
+          },
+          {
+            "name": "address_family",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ipv4",
+              "title": "Address Family"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Getroutingroutes"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interface/shut": {
+      "patch": {
+        "summary": "Shut down an interface on a device.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n  - interface_name (str): The name of the interface to shut down.\n\nReturns:\n  - dict: A dictionary containing the result of the operation.",
+        "operationId": "shutInterface",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          },
+          {
+            "name": "interface_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interface Name"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interface/unshut": {
+      "patch": {
+        "summary": "Unshut an interface on a device.",
+        "description": "Args:\n  - device_name (str): This parameter must come from the REST GET endpoint /devices/list.\n  - interface_name (str): The name of the interface to be unshut.\n\nReturns:\n  dict: A dictionary containing the result of the operation.",
+        "operationId": "unshutInterface",
+        "parameters": [
+          {
+            "name": "device_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Name"
+            }
+          },
+          {
+            "name": "interface_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interface Name"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
